@@ -36,20 +36,21 @@ namespace SchedulingPractice.SubWorkerRunner
                     //services.AddHostedService<AndrewSubWorkerBackgroundService2>();
                     if (mode == "demo") services.AddHostedService<SubWorker.AndrewDemo.AndrewSubWorkerBackgroundService>();
                     else if (mode == "andrew0928") services.AddHostedService<SubWorker.AndrewDemo.AndrewSubWorkerBackgroundService2>();
-                    else if (mode == "andy19900208") services.AddHostedService<SubWorker.AndyDemo.AndySubWorkerBackgroundService>();
-                    else if (mode == "julian-chu") services.AddHostedService<SubWorker.JulianDemo.JulianSubWorkerBackgroundService>();
-                    else if (mode == "borischin") services.AddHostedService<SubWorker.BorisDemo.BorisSubWorkerBackgroundService>();
-                    else if (mode == "levichen") services.AddHostedService<SubWorker.LeviDemo.LeviSubWorkerBackgroundService>();
-                    else if (mode == "jwchen-dev") services.AddHostedService<SubWorker.JWDemo.JWSubWorkerBackgroundServiceV2>();
+                    else if (mode == "mertin") services.AddHostedService<SubWorker.MertinDemo.MertinSubWorkerBackgroundServices>();
+                    //else if (mode == "andy19900208") services.AddHostedService<SubWorker.AndyDemo.AndySubWorkerBackgroundService>();
+                    //else if (mode == "julian-chu") services.AddHostedService<SubWorker.JulianDemo.JulianSubWorkerBackgroundService>();
+                    //else if (mode == "borischin") services.AddHostedService<SubWorker.BorisDemo.BorisSubWorkerBackgroundService>();
+                    //else if (mode == "levichen") services.AddHostedService<SubWorker.LeviDemo.LeviSubWorkerBackgroundService>();
+                    //else if (mode == "jwchen-dev") services.AddHostedService<SubWorker.JWDemo.JWSubWorkerBackgroundServiceV2>();
                     //else if (mode == "toyo0103") services.AddHostedService<SubWorker.JolinDemo.JolinSubWorkerBackgroundService>();
-                    else if (mode == "toyo0103")
-                    {
-                        services.AddSingleton<IHostedService, SubWorker.JolinDemo.JolinSubWorkerBackgroundService>(sp =>
-                        {
-                            return new SubWorker.JolinDemo.JolinSubWorkerBackgroundService(null);
-                        });
-                    }
-                    else if (mode == "acetaxxxx") services.AddHostedService<HankTestTwo.HankTestProgram>();
+                    //else if (mode == "toyo0103")
+                    //{
+                    //    services.AddSingleton<IHostedService, SubWorker.JolinDemo.JolinSubWorkerBackgroundService>(sp =>
+                    //    {
+                    //        return new SubWorker.JolinDemo.JolinSubWorkerBackgroundService(null);
+                    //    });
+                    //}
+                    //else if (mode == "acetaxxxx") services.AddHostedService<HankTestTwo.HankTestProgram>();
                     else { throw new ArgumentOutOfRangeException($"Mode: {mode} not is not valid."); }
                 })
                 .Build();
@@ -62,7 +63,7 @@ namespace SchedulingPractice.SubWorkerRunner
             {
                 do
                 {
-                    int timeout = 0; 
+                    int timeout = 0;
                     int delay_start = rnd.Next(10);
 
                     if (min_timeout == 0 && max_timeout == 0)
@@ -86,7 +87,7 @@ namespace SchedulingPractice.SubWorkerRunner
                         Task.Delay(TimeSpan.FromSeconds(timeout)).Wait();
                         host.StopAsync(TimeSpan.FromSeconds(30)).Wait();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine($"- Exception: {ex}");
                         File.AppendAllText($"exception-{mode}-{min_timeout}-{max_timeout}-{total_timeout}-PID{Process.GetCurrentProcess().Id}.txt", ex.ToString());
